@@ -1,0 +1,6 @@
+venv
+.idea
+__pycache__
+.env
+**/secret*
+default_settings.txt
