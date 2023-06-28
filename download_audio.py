@@ -1,6 +1,9 @@
 import os
+import traceback
+
 from pytube import YouTube
 from pydub import AudioSegment
+from pytube.exceptions import PytubeError
 
 from utils_ import utf8_decode, get_video_id, clean_filename
 
@@ -20,29 +23,23 @@ def download_audio(url):
         convert_m4a_to_mp3(title, video_id)
         print(f"{title}.mp3 has been downloaded and converted.")
 
-    except Exception as e:
-        print(e)
-        # traceback.print_exc()
+    except PytubeError as e:
+        traceback.print_exc()
 
 
 def download_playlist_audio(playlist_url):
-    try:
-        import re
-        from pytube import Playlist
+    import re
+    from pytube import Playlist
 
-        playlist = Playlist(playlist_url)
-        # fixes empty playlist.videos list
-        playlist._video_regex = re.compile(r"\"url\":\"(/watch\?v=[\w-]*)")
+    playlist = Playlist(playlist_url)
+    # fixes empty playlist.videos list
+    playlist._video_regex = re.compile(r"\"url\":\"(/watch\?v=[\w-]*)")
 
-        playlist_urls = playlist.video_urls
-        print(f"Number of videos in playlist: {len(playlist_urls)}")
+    playlist_urls = playlist.video_urls
+    print(f"Number of videos in playlist: {len(playlist_urls)}")
 
-        for video_url in playlist:
-            download_audio(video_url)
-
-    except Exception as e:
-        print(e)
-        # traceback.print_exc()
+    for video_url in playlist:
+        download_audio(video_url)
 
 
 # convert m4a to mp3 so it has ID3 tags

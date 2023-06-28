@@ -1,6 +1,8 @@
 import os
+import traceback
 from collections import namedtuple
 from pytube import YouTube
+from pytube.exceptions import PytubeError
 
 from utils_ import utf8_decode, clean_filename
 
@@ -72,9 +74,8 @@ def get_video_info_and_pref(url):
 
         return VideoInfoAndPreference(url, title, selected_stream, audio_stream, selected_caption_objs)
 
-    except Exception as e:
-        print(e)
-        # traceback.print_exc()
+    except PytubeError as e:
+        traceback.print_exc()
 
 
 def filter_streams_by_resolution(streams: YouTube.streams):

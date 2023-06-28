@@ -1,6 +1,10 @@
 # can be more DRY
 import os
+import traceback
+
 from pytube import YouTube
+from pytube.exceptions import PytubeError
+
 from utils_ import get_video_id, utf8_decode
 
 
@@ -20,9 +24,8 @@ def download_video(video_info_and_pref):
 
         print(f"{title}.mp4 has been downloaded.")
 
-    except Exception as e:
-        print(e)
-        # traceback.print_exc()
+    except PytubeError as e:
+        traceback.print_exc()
 
 
 # Todo: use parallel process to speed things up
@@ -47,9 +50,8 @@ def download_playlist_video(playlist_url):
             # get highest resolution with audio (max 720p)
             yt.streams.get_highest_resolution().download()
 
-    except Exception as e:
-        print(e)
-        # traceback.print_exc()
+    except PytubeError as e:
+        traceback.print_exc()
 
 
 def download_video_audio_separately(video_info_and_pref):

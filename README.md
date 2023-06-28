@@ -16,7 +16,7 @@ Download YouTube mp3, mp4 and captions. Including playlists.
     5. Right click > Extract here
     6. Rename folder as `ffmpeg`
 3. Verify dependencies are installed
-    1. enter `python --version` in cmd or powershell. If `is not recognized as an internal command` occurs, ffmpeg has not been properly installed.
+    1. enter `python --version` in cmd or powershell. If `is not recognized as an internal command` occurs, python has not been properly installed.
     2. enter `pip --version`
 4. Run `main.sh`
 
@@ -25,4 +25,11 @@ You can create default_settings.txt:
 ```
 filepath
 "mp3" or "mp4"
+```
+
+E.g.
+
+```
+C:\Music
+mp3
 ```

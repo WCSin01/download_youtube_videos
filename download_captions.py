@@ -1,3 +1,7 @@
+import traceback
+
+from pytube.exceptions import PytubeError
+
 from utils_ import clean_filename
 
 
@@ -10,7 +14,6 @@ def download_captions(video_info_and_pref):
             f.write(captions)
             f.close()
 
-    except Exception as e:
-        print(e)
-        # traceback.print_exc()
+    except PytubeError as e:
+        traceback.print_exc()
 
