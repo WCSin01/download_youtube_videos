@@ -7,6 +7,8 @@ from utils_ import clean_filename
 
 def download_captions(video_info_and_pref):
     try:
+        if not video_info_and_pref.selected_caption_objs:
+            return
         for caption_obj in video_info_and_pref.selected_caption_objs:
             # ignore deprecated warning
             captions = caption_obj.generate_srt_captions()

@@ -1,7 +1,7 @@
 import os
 import traceback
 
-from pytube import YouTube
+from pytubefix import YouTube
 from pydub import AudioSegment
 from pytube.exceptions import PytubeError
 

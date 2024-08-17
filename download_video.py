@@ -2,7 +2,7 @@
 import os
 import traceback
 
-from pytube import YouTube
+from pytubefix import YouTube
 from pytube.exceptions import PytubeError
 
 from utils_ import get_video_id, utf8_decode
@@ -11,7 +11,7 @@ from utils_ import get_video_id, utf8_decode
 def download_video(video_info_and_pref):
     try:
         title = video_info_and_pref.title
-        selected_stream = video_info_and_pref.selected_stream
+        selected_stream = video_info_and_pref.video_stream
 
         print(f"downloading video at {selected_stream.resolution}: {title} ...")
         print("Pls do not touch the file until completed.")
@@ -57,7 +57,7 @@ def download_playlist_video(playlist_url):
 def download_video_audio_separately(video_info_and_pref):
     url = video_info_and_pref.url
     title = video_info_and_pref.title
-    selected_stream = video_info_and_pref.selected_stream
+    selected_stream = video_info_and_pref.video_stream
     audio_stream = video_info_and_pref.audio_stream
 
     import subprocess

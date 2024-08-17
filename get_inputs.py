@@ -1,7 +1,7 @@
 import os
 import traceback
 from collections import namedtuple
-from pytube import YouTube
+from pytubefix import YouTube, StreamQuery, Stream, CaptionQuery, Caption
 from pytube.exceptions import PytubeError
 
 from utils_ import utf8_decode, clean_filename
@@ -9,10 +9,10 @@ from utils_ import utf8_decode, clean_filename
 
 class VideoInfoAndPreference:
     # python does not set to undefined
-    def __init__(self, url, title, selected_stream, audio_stream, selected_caption_objs=None):
+    def __init__(self, url: str, title: str, video_stream: Stream|None, audio_stream: Stream|None, selected_caption_objs=None):
         self.url = url
         self.title = title
-        self.selected_stream = selected_stream
+        self.video_stream = video_stream
         self.audio_stream = audio_stream
         self.selected_caption_objs = selected_caption_objs
 
@@ -33,8 +33,8 @@ def get_initial_inputs():
 
 def get_media_type_input():
     while True:
-        media_type = input("MP3 or MP4: ").lower()
-        if media_type == "mp3" or media_type == "mp4":
+        media_type = input("MP3 or MP4 or cc: ").lower()
+        if media_type == "mp3" or media_type == "mp4" or media_type == "cc":
             return media_type
         else:
             print("Invalid file type specified.")
@@ -78,7 +78,24 @@ def get_video_info_and_pref(url):
         traceback.print_exc()
 
 
-def filter_streams_by_resolution(streams: YouTube.streams):
+# similar to get_video_info_and_pref. refactor.
+def get_caption_info_and_pref(url):
+    try:
+        yt = YouTube(url)
+        title = utf8_decode(yt.title)
+        title = clean_filename(title)
+
+        captions_obj_list = yt.captions
+        print_caption_langs(captions_obj_list)
+        selected_caption_objs = get_selected_caption_objs(captions_obj_list)
+
+        return VideoInfoAndPreference(url, title, None, None, selected_caption_objs)
+
+    except PytubeError as e:
+        traceback.print_exc()
+
+
+def filter_streams_by_resolution(streams: YouTube.streams) -> list[Stream]:
     # Todo: add more resolutions
     filtered_streams = [
         streams.get_by_itag(18),
@@ -92,13 +109,13 @@ def filter_streams_by_resolution(streams: YouTube.streams):
     return filtered_streams
 
 
-def print_resolutions(streams: list):
+def print_resolutions(streams: list[Stream]):
     print("Available resolutions: ")
     for stream in streams:
         print(f"  {stream.resolution}")
 
 
-def get_selected_resolution(filtered_streams: list):
+def get_selected_resolution(filtered_streams: list[Stream]) -> Stream | None:
     while True:
         selected_resolution_input = input("Resolution: ").lower()
         selected_resolution: list = [
@@ -120,13 +137,16 @@ def should_get_captions():
 
 
 def print_caption_langs(captions_obj_list):
+    if not len(captions_obj_list):
+        print("No captions found.")
+        exit(0)
     for captions_obj in captions_obj_list:
         code = captions_obj.code
         lang = captions_obj.name
         print(f"{code}: {lang}")
 
 
-def get_selected_caption_objs(captions_obj_list):
+def get_selected_caption_objs(captions_obj_list: CaptionQuery) -> list[Caption] | None:
     import re
 
     while True:

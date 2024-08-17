@@ -50,10 +50,15 @@ def utf8_decode(string):
     return str_copy
 
 
-def clean_filename(filename):
+def clean_filename(filename: str) -> str:
     import re
 
     reg_exp = re.compile(r"[\\<>\*\?/\$!\"\:@\+\`\|=]")
+    saved_filename = filename
     if reg_exp.search(filename):
-        print(f"File name contained characters disallowed for filenames. Original filename: {filename}")
-    return re.sub(reg_exp, " ", filename)
+        saved_filename = re.sub(reg_exp, " ", filename)
+        print(
+            f"""File name contained characters disallowed for filenames.
+            Original filename: {filename}
+            Saved filename: {saved_filename}""")
+    return saved_filename
