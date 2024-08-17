@@ -27,7 +27,7 @@ def main():
         if inputs.media_type == "mp3":
             from download_audio import download_audio
             download_audio(inputs.url)
-        elif inputs.media_type == "mp3":
+        elif inputs.media_type == "mp4":
             from get_inputs import get_video_info_and_pref
             from download_video import download_video
             video_info_and_pref = get_video_info_and_pref(inputs.url)

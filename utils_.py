@@ -3,7 +3,10 @@ def get_video_id(url):
 
     url_data = urllib.parse.urlparse(url)
     query = urllib.parse.parse_qs(url_data.query)
-    return query["v"][0]
+    if "v" in query:
+        return query["v"][0]
+    else:
+        raise ValueError("Open the url in browser and copy it. The url should have 'watch?v='")
 
 
 def utf8_decode(string):
@@ -62,3 +65,10 @@ def clean_filename(filename: str) -> str:
             Original filename: {filename}
             Saved filename: {saved_filename}""")
     return saved_filename
+
+
+def progress(video, chunk, bytes_remaining):
+    file_size = video.filesize
+    current_fraction = ((file_size - bytes_remaining)/file_size)
+    current_percent = '{0:.1f}'.format(current_fraction * 100)
+    print(f"{current_percent}% completed")

@@ -18,4 +18,3 @@ def download_captions(video_info_and_pref):
 
     except PytubeError as e:
         traceback.print_exc()
-

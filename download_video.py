@@ -5,7 +5,7 @@ import traceback
 from pytubefix import YouTube
 from pytube.exceptions import PytubeError
 
-from utils_ import get_video_id, utf8_decode
+from utils_ import get_video_id, utf8_decode, progress
 
 
 def download_video(video_info_and_pref):
@@ -43,7 +43,7 @@ def download_playlist_video(playlist_url):
         print(f"Number of videos in playlist: {len(playlist_urls)}")
 
         for video_url in playlist_urls:
-            yt = YouTube(video_url)
+            yt = YouTube(video_url, on_progress_callback=progress)
             title = utf8_decode(yt.title)
             print(f"downloading video (up to 720p): {title} ...")
             print("Pls do not touch the file until completed.")

@@ -1,7 +1,7 @@
 import os
 import traceback
 from collections import namedtuple
-from pytubefix import YouTube, StreamQuery, Stream, CaptionQuery, Caption
+from pytubefix import YouTube, Stream, CaptionQuery, Caption
 from pytube.exceptions import PytubeError
 
 from utils_ import utf8_decode, clean_filename
@@ -9,7 +9,13 @@ from utils_ import utf8_decode, clean_filename
 
 class VideoInfoAndPreference:
     # python does not set to undefined
-    def __init__(self, url: str, title: str, video_stream: Stream|None, audio_stream: Stream|None, selected_caption_objs=None):
+    def __init__(
+            self,
+            url: str,
+            title: str,
+            video_stream: Stream | None,
+            audio_stream: Stream | None,
+            selected_caption_objs=None):
         self.url = url
         self.title = title
         self.video_stream = video_stream
@@ -156,7 +162,7 @@ def get_selected_caption_objs(captions_obj_list: CaptionQuery) -> list[Caption] 
 
         filtered_captions_objs = []
         for selected_lang in selected_langs:
-            filtered_captions_objs.append(captions_obj_list.get_by_language_code(selected_lang))
+            filtered_captions_objs.append(captions_obj_list[selected_lang])
         # remove None
         filtered_captions_objs = [captions_obj for captions_obj in filtered_captions_objs if captions_obj]
 
