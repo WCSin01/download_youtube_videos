@@ -61,7 +61,7 @@ def get_dest_dir():
 
 def get_video_info_and_pref(url):
     try:
-        yt = YouTube(url)
+        yt = YouTube(url, "WEB_CREATOR")
         title = utf8_decode(yt.title)
         title = clean_filename(title)
         streams = yt.streams
@@ -87,7 +87,7 @@ def get_video_info_and_pref(url):
 # similar to get_video_info_and_pref. refactor.
 def get_caption_info_and_pref(url):
     try:
-        yt = YouTube(url)
+        yt = YouTube(url, "WEB_CREATOR")
         title = utf8_decode(yt.title)
         title = clean_filename(title)
 
