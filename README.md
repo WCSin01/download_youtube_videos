@@ -2,13 +2,13 @@
 Download YouTube mp3, mp4 and captions. Including playlists.
 
 ## Requirements
-1. ffmpeg
-2. python
+1. python
+2. ffmpeg
 
-## Getting Started for Windows
+## Install ffmpeg for Windows
 
 1. Download & install a program that can decompress `.7z` (e.g. 7Zip, WinRAR)
-2. Download latest ffmpeg to `C:/`
+2. Download latest ffmpeg to `C:/` (https://www.wikihow.com/Install-FFmpeg-on-Windows)
     1. https://ffmpeg.org/download.html
     2. Windows logo
     3. `Windows builds from gyan.dev`
@@ -18,9 +18,23 @@ Download YouTube mp3, mp4 and captions. Including playlists.
 3. Verify dependencies are installed
     1. enter `python --version` in cmd or powershell. If `is not recognized as an internal command` occurs, python has not been properly installed.
     2. enter `pip --version`
-4. Run `main.sh`
+4. Run `setup.bat`
 
-You can create default_settings.txt:
+## Install ffmpeg for Linux Debian
+
+```
+sudo apt install ffmpeg
+```
+
+## Run
+
+```
+python main.py
+```
+
+## Configuration
+
+You can create `default_settings.txt`:
 
 ```
 filepath

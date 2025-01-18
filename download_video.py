@@ -43,7 +43,7 @@ def download_playlist_video(playlist_url):
         print(f"Number of videos in playlist: {len(playlist_urls)}")
 
         for video_url in playlist_urls:
-            yt = YouTube(video_url, "WEB_CREATOR", on_progress_callback=progress)
+            yt = YouTube(video_url, "WEB", use_oauth=True, allow_oauth_cache=True, on_progress_callback=progress)
             title = utf8_decode(yt.title)
             print(f"downloading video (up to 720p): {title} ...")
             print("Pls do not touch the file until completed.")

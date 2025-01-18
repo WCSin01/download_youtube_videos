@@ -10,7 +10,7 @@ from utils_ import utf8_decode, get_video_id, clean_filename, progress
 
 def download_audio(url):
     try:
-        yt = YouTube(url, "WEB_CREATOR", on_progress_callback=progress)
+        yt = YouTube(url, "WEB",  use_oauth=True, allow_oauth_cache=True, on_progress_callback=progress)
         title = utf8_decode(yt.title)
         # remove illegal filename char
         title = clean_filename(title)
